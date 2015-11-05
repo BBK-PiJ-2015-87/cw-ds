@@ -14,9 +14,16 @@ public class ArrayList implements List {
      */
     private Object[] elements;
 
+    private int size;
 
+    /**
+     * Constructs list of a given size
+     *
+     * @param size of the array list. Default is 20 elements.
+     */
     public ArrayList(int size) {
         elements = new Object[size];
+        this.size = size;
     }
 
     public ArrayList() {
@@ -25,7 +32,7 @@ public class ArrayList implements List {
 
     @Override
     public boolean isEmpty() {
-        return elements.length == 0;
+        return size == 0;
     }
 
     @Override
@@ -49,8 +56,8 @@ public class ArrayList implements List {
 
     @Override
     public ReturnObject add(int index, Object item) {
-        if (isIndexValid(index)) {
-            return returnSuccess(item);
+        if (!isIndexValid(index)) {
+            return returnOutOfBoundsError();
         } else if (item == null) {
             return returnInvalidArgumentError();
         } else {
@@ -72,6 +79,14 @@ public class ArrayList implements List {
         }
     }
 
+    private int getLastElementPosition() {
+        int position = 0;
+        while (elements[position] != null) {
+            position++;
+        }
+        return position;
+    }
+
     private ReturnObject returnOutOfBoundsError() {
         return new ReturnObjectImpl(ErrorMessage.INDEX_OUT_OF_BOUNDS, null);
     }
@@ -89,12 +104,14 @@ public class ArrayList implements List {
     }
 
     private void increaseSize() {
-        int size = elements.length;
-        if (elements[size - 1] != null) {
-            Object[] tmp = elements;
-            elements = new Object[size * 2];
-            copyArrayElements(tmp, elements);
+        Object[] tmp = elements;
+        int newSize = (size < (Integer.MAX_VALUE/2 - 20))? size*2 : Integer.MAX_VALUE-20;
+        if (size < 5) {
+            elements = new Object[10];
+        } else if (elements[size/2] != null) {
+            elements = new Object[newSize];
         }
+        copyArrayElements(tmp, elements);
     }
 
     private void copyArrayElements(Object[] src, Object[] dest) {
