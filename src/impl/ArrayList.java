@@ -7,19 +7,34 @@ import interfaces.ReturnObject;
  * Created by vladimirsivanovs on 05/11/2015.
  */
 public class ArrayList implements List {
+
+    /**
+     * The array where all elements are stored.
+     */
+    private ReturnObject[] elements;
+
+
+    public ArrayList(int size) {
+        elements = new ReturnObject[size];
+    }
+
+    public ArrayList() {
+        this(20);
+    }
+
     @Override
     public boolean isEmpty() {
-        return false;
+        return elements.length == 0;
     }
 
     @Override
     public int size() {
-        return 0;
+        return elements.length;
     }
 
     @Override
     public ReturnObject get(int index) {
-        return null;
+        return elements[index];
     }
 
     @Override
