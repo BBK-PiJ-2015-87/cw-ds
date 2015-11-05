@@ -1,3 +1,5 @@
+package interfaces;
+
 /**
  * A sampleable list can be sampled. 
  * 

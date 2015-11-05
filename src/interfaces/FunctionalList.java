@@ -1,3 +1,5 @@
+package interfaces;
+
 /**
  * A functional list is a list with a few additional methods that are
  * common in functional languages (such as Lisp, Clojure, or Haskell)
