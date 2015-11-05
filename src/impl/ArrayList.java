@@ -5,7 +5,7 @@ import interfaces.List;
 import interfaces.ReturnObject;
 
 /**
- * Created by vladimirsivanovs on 05/11/2015.
+ * Created by Vladimirs Ivanovs on 05/11/2015.
  */
 public class ArrayList implements List {
 
@@ -71,6 +71,10 @@ public class ArrayList implements List {
         return null;
     }
 
+    /**
+     * @param index
+     * @return
+     */
     private boolean isIndexValid(int index) {
         if (index < 0 || index >= elements.length) {
             return false;
@@ -79,6 +83,9 @@ public class ArrayList implements List {
         }
     }
 
+    /**
+     * @return
+     */
     private int getLastElementPosition() {
         int position = 0;
         while (elements[position] != null) {
@@ -87,22 +94,38 @@ public class ArrayList implements List {
         return position;
     }
 
+    /**
+     * @return
+     */
     private ReturnObject returnOutOfBoundsError() {
         return new ReturnObjectImpl(ErrorMessage.INDEX_OUT_OF_BOUNDS, null);
     }
 
+    /**
+     * @return
+     */
     private ReturnObject returnEmptyStructureError() {
         return new ReturnObjectImpl(ErrorMessage.EMPTY_STRUCTURE, null);
     }
 
+    /**
+     * @return
+     */
     private ReturnObject returnInvalidArgumentError() {
         return new ReturnObjectImpl(ErrorMessage.INVALID_ARGUMENT, null);
     }
 
+    /**
+     * @param object
+     * @return
+     */
     private ReturnObject returnSuccess(Object object) {
         return new ReturnObjectImpl(ErrorMessage.NO_ERROR, object);
     }
 
+    /**
+     *
+     */
     private void increaseSize() {
         Object[] tmp = elements;
         int newSize = (size < (Integer.MAX_VALUE/2 - 20))? size*2 : Integer.MAX_VALUE-20;
@@ -114,6 +137,10 @@ public class ArrayList implements List {
         copyArrayElements(tmp, elements);
     }
 
+    /**
+     * @param src
+     * @param dest
+     */
     private void copyArrayElements(Object[] src, Object[] dest) {
         int iter = src.length;
         while (iter > 0) {
