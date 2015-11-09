@@ -3,10 +3,8 @@ package impl;
 import interfaces.ErrorMessage;
 import interfaces.ReturnObject;
 
-import java.util.Objects;
-
 /**
- * Created by vladimirsivanovs on 05/11/2015.
+ * Created by Vladimirs Ivanovs on 05/11/2015.
  */
 public class ReturnObjectImpl implements ReturnObject {
     private ErrorMessage error;
@@ -19,7 +17,7 @@ public class ReturnObjectImpl implements ReturnObject {
 
     @Override
     public boolean hasError() {
-        return error!=null;
+        return !error.toString().equals("NO_ERROR");
     }
 
     @Override
@@ -30,5 +28,11 @@ public class ReturnObjectImpl implements ReturnObject {
     @Override
     public Object getReturnValue() {
         return returnValue;
+    }
+
+    @Override
+    public String toString() {
+        return "Error: " + this.hasError() + " Message: " + getError().toString() +
+                " Object: " + returnValue;
     }
 }

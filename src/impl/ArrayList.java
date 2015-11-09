@@ -10,24 +10,28 @@ import interfaces.ReturnObject;
 public class ArrayList implements List {
 
     /**
-     * The array where all elements are stored. Default size of this array is 20.
+     * The array where all elements are stored. Default size of this array is 5.
      */
     private Object[] elements;
 
-    private int size;
+    private int size = 0;
+
+    private static final int DEFAULT_CAPACITY = 5;
 
     /**
      * Constructs list of a given size
      *
-     * @param size of the array list. Default is 20 elements.
+     * @param capacity of the array list. Default is 5 elements.
      */
-    public ArrayList(int size) {
-        elements = new Object[size];
-        this.size = size;
+    public ArrayList(int capacity) {
+        if (capacity < DEFAULT_CAPACITY) {
+            capacity = DEFAULT_CAPACITY;
+        }
+        elements = new Object[capacity];
     }
 
     public ArrayList() {
-        this(20);
+        this(DEFAULT_CAPACITY);
     }
 
     @Override
@@ -37,46 +41,82 @@ public class ArrayList implements List {
 
     @Override
     public int size() {
-        return elements.length;
+        return size;
     }
 
     @Override
     public ReturnObject get(int index) {
-        if (!isIndexValid(index)) {
+        if (!isIndexValid(index, size)) {
             return returnOutOfBoundsError();
         } else {
-            return new ReturnObjectImpl(ErrorMessage.NO_ERROR, elements[index]);
+            return returnSuccess(elements[index]);
         }
     }
 
     @Override
     public ReturnObject remove(int index) {
-        return null;
+        if (!isIndexValid(index, size)) {
+            return returnOutOfBoundsError();
+        }
+
+        Object result = elements[index];
+
+        for (int i = index; i < size; i++) {
+            elements[i] = elements[i + 1];
+        }
+        elements[size] = null;
+        size--;
+        return returnSuccess(result);
     }
 
     @Override
     public ReturnObject add(int index, Object item) {
-        if (!isIndexValid(index)) {
+        if (!isIndexValid(index, size + 1)) {
             return returnOutOfBoundsError();
         } else if (item == null) {
             return returnInvalidArgumentError();
-        } else {
-            elements[index] = item;
-            return returnSuccess(item);
         }
+
+        doubleSize();
+
+        //move elements of the array to the right by 1
+        for (int i = size - 1; i >= index; i--) {
+            elements[i + 1] = elements[i];
+        }
+        return addElement(index, item);
     }
 
     @Override
     public ReturnObject add(Object item) {
-        return null;
+        if (item == null) {
+            return returnInvalidArgumentError();
+        }
+        doubleSize();
+        return addElement(size, item);
     }
 
     /**
-     * @param index
-     * @return
+     * Adds element to the array, increments size by 1 and return wrapper object.
+     *
+     * @param index position of insertion
+     * @param item Object to be inserted
+     * @return inserted object with no Error
      */
-    private boolean isIndexValid(int index) {
-        if (index < 0 || index >= elements.length) {
+    private ReturnObject addElement(int index, Object item) {
+        elements[index] = item;
+        size++;
+        return returnSuccess(item);
+    }
+
+    /**
+     * Checks if index is a valid number.
+     *
+     * @param index to check
+     * @param max maximal possible value of provided index
+     * @return true if valid, false otherwise
+     */
+    private boolean isIndexValid(int index, int max) {
+        if (index < 0 || index >= max) {
             return false;
         } else {
             return true;
@@ -84,17 +124,33 @@ public class ArrayList implements List {
     }
 
     /**
-     * @return
+     * Increases the size of the array to a provided size
+     *
+     * @param newSize size of a new array
      */
-    private int getLastElementPosition() {
-        int position = 0;
-        while (elements[position] != null) {
-            position++;
+    private void increaseSize(int newSize) {
+        Object[] tmp = new Object[newSize];
+        for (int i = 0; i < size; i++) {
+            tmp[i] = elements[i];
         }
-        return position;
+        elements = tmp;
+//        System.out.println("DEBUG: Increased array" );
     }
 
     /**
+     * Double size of the array is full.
+     */
+    private void doubleSize() {
+        int capacity = elements.length;
+        if (size == capacity) {
+//            System.out.println("DEBUG: Doubled the size");
+            increaseSize(elements.length * 2);
+        }
+    }
+
+    /**
+     * Returns wrapper object with Index Out of Bounds error message.
+     *
      * @return
      */
     private ReturnObject returnOutOfBoundsError() {
@@ -102,6 +158,8 @@ public class ArrayList implements List {
     }
 
     /**
+     * Returns wrapper object with Empty Source error message.
+     *
      * @return
      */
     private ReturnObject returnEmptyStructureError() {
@@ -109,6 +167,8 @@ public class ArrayList implements List {
     }
 
     /**
+     * Returns wrapper object with Invalid Argument error message.
+     *
      * @return
      */
     private ReturnObject returnInvalidArgumentError() {
@@ -116,7 +176,9 @@ public class ArrayList implements List {
     }
 
     /**
-     * @param object
+     * Returns wrapper object with no error message.
+     *
+     * @param object to be returned within wrapper object
      * @return
      */
     private ReturnObject returnSuccess(Object object) {
@@ -124,28 +186,12 @@ public class ArrayList implements List {
     }
 
     /**
+     * Returns capacity of the array list. For test purposes.
      *
+     * @return array length
      */
-    private void increaseSize() {
-        Object[] tmp = elements;
-        int newSize = (size < (Integer.MAX_VALUE/2 - 20))? size*2 : Integer.MAX_VALUE-20;
-        if (size < 5) {
-            elements = new Object[10];
-        } else if (elements[size/2] != null) {
-            elements = new Object[newSize];
-        }
-        copyArrayElements(tmp, elements);
-    }
-
-    /**
-     * @param src
-     * @param dest
-     */
-    private void copyArrayElements(Object[] src, Object[] dest) {
-        int iter = src.length;
-        while (iter > 0) {
-            dest[iter] = src[iter];
-        }
+    public int getCapacity() {
+        return elements.length;
     }
 
 }
