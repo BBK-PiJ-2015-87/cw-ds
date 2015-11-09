@@ -115,7 +115,7 @@ public class ArrayList implements List {
      * @param max maximal possible value of provided index
      * @return true if valid, false otherwise
      */
-    private boolean isIndexValid(int index, int max) {
+    public boolean isIndexValid(int index, int max) {
         if (index < 0 || index >= max) {
             return false;
         } else {

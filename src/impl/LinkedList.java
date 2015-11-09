@@ -10,11 +10,8 @@ import interfaces.ReturnObject;
 public class LinkedList implements List {
 
     protected int size = 0;
-    private ListNode head = null;
-
-    public LinkedList() {
-        head = null;
-    }
+    public Node head = null;
+    public Node tail = null;
 
     @Override
     public boolean isEmpty() {
@@ -26,54 +23,68 @@ public class LinkedList implements List {
         return size;
     }
 
+    /**
+     * Returns node at the given index.
+     *
+     * @param index of the node
+     * @return node at given index
+     */
+    private Node getNode(int index) {
+        //if index is greater than half of size - traverse from start
+        if (index < (size >> 1)) {
+            Node node = head;
+            for (int i = 0; i < index; i++) {
+                node = node.getNext();
+            }
+            return node;
+        } else {
+            Node node = tail;
+            for (int i = size - 1; i > index; i--) {
+                node = node.getPrev();
+            }
+            return node;
+        }
+    }
+
+
     @Override
     public ReturnObject get(int index) {
-        if (!isIndexValid(index + 1)) {
+        if (!isIndexValid(index)) {
             return new ReturnObjectImpl(ErrorMessage.INDEX_OUT_OF_BOUNDS, null);
         }
-        ListNode node = head;
-        while (index > 1) {
-            node = node.getNext();
-            index--;
-        }
+        Node node = this.getNode(index);
         return returnSuccess(node.getValue());
     }
 
     @Override
     public ReturnObject remove(int index) {
-        ListNode toRemove;
-        ListNode prevNode = head;
-        while (index > 1) {
-            prevNode = prevNode.getNext();
-            index--;
-        }
-        toRemove = prevNode.getNext();
-        prevNode.setNext(toRemove.getNext());
-        Object result = toRemove.getValue();
-        toRemove.setNext(null);
+        if (!isIndexValid(index)) return returnOutOfBoundsError();
+        if (isEmpty()) return returnEmptyStructureError();
+
+        Node node = getNode(index);
+        node.getPrev().setNext(node.getNext());
+        node.setNext(null);
         size--;
-        return returnSuccess(result);
+
+        return returnSuccess(node.getValue());
 
     }
 
     @Override
     public ReturnObject add(int index, Object item) {
-        if (!isIndexValid(index)) {
-            return new ReturnObjectImpl(ErrorMessage.INDEX_OUT_OF_BOUNDS, null);
-        }
+        if (!isPositionValid(index)) return returnOutOfBoundsError();
+        if (item == null) return returnInvalidArgumentError();
 
-        ListNode newNode = new ListNode(item);
-
-        if (isEmpty()) {
-            head = newNode;
+        if (index == 0) {
+            addFirst(item);
+        } else if (index == size) {
+            addLast(item);
         } else {
-            ListNode nodePreIndex = head;
-            while (index > 2) {
-                nodePreIndex = nodePreIndex.getNext();
-                index--;
-            }
-            newNode.setNext(nodePreIndex.getNext());
-            nodePreIndex.setNext(newNode);
+            Node succ = getNode(index);
+            Node pred = succ.getPrev();
+            Node newNode = new Node(item, succ, pred);
+            succ.setPrev(newNode);
+            pred.setNext(newNode);
         }
         size++;
         return returnSuccess(item);
@@ -81,29 +92,50 @@ public class LinkedList implements List {
 
     @Override
     public ReturnObject add(Object item) {
-
-//        System.out.println("DEBUG: list size is " + size);
-        ListNode newNode = new ListNode(item);
-        if (isEmpty()) {
-//            System.out.println("DEBUG: List is empty");
-            head = newNode;
-        } else {
-            ListNode next = head;
-            while (next.getNext() != null) {
-//                System.out.println("DEBUG: next is " + next.getNext().getValue());
-                next = next.getNext();
-            }
-            next.setNext(newNode);
+        if (item == null) {
+            return returnInvalidArgumentError();
         }
+        addLast(item);
         size++;
-        return returnSuccess(newNode.getValue());
+        return returnSuccess(item);
+    }
+
+    /**
+     * Adds node to the beginning of the list
+     *
+     * @param item to be added
+     */
+    private void addFirst(Object item) {
+        Node first = head;
+        head = new Node(item, head, null);
+        if (size == 0) {
+            tail = head;
+        } else {
+            first.setPrev(head);
+        }
+    }
+
+    /**
+     * Adds node to the end of the list.
+     *
+     * @param item to be added
+     */
+    private void addLast(Object item) {
+        Node last = tail;
+        tail = new Node(item, null, tail);
+        if (size == 0) {
+            head = tail;
+        } else {
+            last.setNext(tail);
+        }
     }
 
     public boolean isIndexValid(int index) {
-        if (index < 1 || index > size + 1) {
-            return false;
-        }
-        return true;
+        return (index >= 0 && index < size);
+    }
+
+    public boolean isPositionValid(int index) {
+        return (index >= 0 && index <= size);
     }
 
     /**
@@ -114,6 +146,51 @@ public class LinkedList implements List {
      */
     protected ReturnObject returnSuccess(Object object) {
         return new ReturnObjectImpl(ErrorMessage.NO_ERROR, object);
+    }
+
+    /**
+     * Returns wrapper object with Invalid Argument error message.
+     *
+     * @return
+     */
+    protected ReturnObject returnInvalidArgumentError() {
+        return new ReturnObjectImpl(ErrorMessage.INVALID_ARGUMENT, null);
+    }
+
+    /**
+     * Returns wrapper object with Empty Source error message.
+     *
+     * @return
+     */
+    protected ReturnObject returnEmptyStructureError() {
+        return new ReturnObjectImpl(ErrorMessage.EMPTY_STRUCTURE, null);
+    }
+
+    /**
+     * Returns wrapper object with Index Out of Bounds error message.
+     *
+     * @return
+     */
+    protected ReturnObject returnOutOfBoundsError() {
+        return new ReturnObjectImpl(ErrorMessage.INDEX_OUT_OF_BOUNDS, null);
+    }
+
+    public void printForward() {
+        Node node = head;
+
+       for (int i = 0; i < size; i ++) {
+           System.out.println(i + " : " + node.getValue() + " by index: " + this.get(i));
+           node = node.getNext();
+        }
+    }
+
+    public void printBackwards() {
+        Node node = tail;
+
+        for (int i = size - 1; i >= 0; i --) {
+            System.out.println(i + " : " + node.getValue() + " by index: " + this.get(i));
+            node = node.getPrev();
+        }
     }
 
 }
