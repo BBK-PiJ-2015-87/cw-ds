@@ -62,18 +62,18 @@ public class LinkedList implements List {
             return new ReturnObjectImpl(ErrorMessage.INDEX_OUT_OF_BOUNDS, null);
         }
 
-        ListNode nodeAtIndex = new ListNode(item);
-        ListNode nodePreIndex = head;
+        ListNode newNode = new ListNode(item);
 
         if (isEmpty()) {
-            head = nodeAtIndex;
+            head = newNode;
         } else {
+            ListNode nodePreIndex = head;
             while (index > 2) {
                 nodePreIndex = nodePreIndex.getNext();
                 index--;
             }
-            nodeAtIndex.setNext(nodePreIndex.getNext());
-            nodePreIndex.setNext(nodeAtIndex);
+            newNode.setNext(nodePreIndex.getNext());
+            nodePreIndex.setNext(newNode);
         }
         size++;
         return returnSuccess(item);

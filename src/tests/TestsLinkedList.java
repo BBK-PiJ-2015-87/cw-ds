@@ -11,6 +11,7 @@ public class TestsLinkedList {
         LinkedList list = new LinkedList();
 
 
+        System.out.println("ADDED: " + list.add("zero"));
         System.out.println("ADDED: " + list.add(1, "one"));
         System.out.println("ADDED: " + list.add(1, "two"));
         System.out.println("ADDED: " + list.add(1, "three"));
