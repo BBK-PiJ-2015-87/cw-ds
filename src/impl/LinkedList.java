@@ -28,6 +28,9 @@ public class LinkedList implements List {
 
     @Override
     public ReturnObject get(int index) {
+        if (!isIndexValid(index + 1)) {
+            return new ReturnObjectImpl(ErrorMessage.INDEX_OUT_OF_BOUNDS, null);
+        }
         ListNode node = head;
         while (index > 1) {
             node = node.getNext();
@@ -59,36 +62,39 @@ public class LinkedList implements List {
             return new ReturnObjectImpl(ErrorMessage.INDEX_OUT_OF_BOUNDS, null);
         }
 
-        ListNode node = new ListNode(item);
-        ListNode nodePre = head;
+        ListNode nodeAtIndex = new ListNode(item);
+        ListNode nodePreIndex = head;
 
         if (isEmpty()) {
-            head = node;
+            head = nodeAtIndex;
+        } else {
+            while (index > 2) {
+                nodePreIndex = nodePreIndex.getNext();
+                index--;
+            }
+            nodeAtIndex.setNext(nodePreIndex.getNext());
+            nodePreIndex.setNext(nodeAtIndex);
         }
-        while (index > 1) {
-            nodePre = nodePre.getNext();
-            index--;
-        }
-        if (index == 1) {
-            head = node;
-            node.setNext(nodePre);
-        }
-
         size++;
         return returnSuccess(item);
     }
 
     @Override
     public ReturnObject add(Object item) {
+
+//        System.out.println("DEBUG: list size is " + size);
         ListNode newNode = new ListNode(item);
         if (isEmpty()) {
+//            System.out.println("DEBUG: List is empty");
             head = newNode;
+        } else {
+            ListNode next = head;
+            while (next.getNext() != null) {
+//                System.out.println("DEBUG: next is " + next.getNext().getValue());
+                next = next.getNext();
+            }
+            next.setNext(newNode);
         }
-        ListNode next = head;
-        while (next.getNext() != null) {
-            next = next.getNext();
-        }
-        next.setNext(newNode);
         size++;
         return returnSuccess(newNode.getValue());
     }

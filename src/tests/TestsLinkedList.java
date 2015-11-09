@@ -14,11 +14,23 @@ public class TestsLinkedList {
         System.out.println("ADDED: " + list.add(1, "one"));
         System.out.println("ADDED: " + list.add(1, "two"));
         System.out.println("ADDED: " + list.add(1, "three"));
+        System.out.println("ADDED: " + list.add(1, "four"));
+        System.out.println("ADDED: " + list.add(1, "five"));
+
+//        System.out.println("ADDED: " + list.add("one"));
+//        System.out.println("ADDED: " + list.add("two"));
+//        System.out.println("ADDED: " + list.add("three"));
+//        System.out.println("ADDED: " + list.add("four"));
+//        System.out.println("ADDED: " + list.add("five"));
 
 
         System.out.println(list.get(1));
         System.out.println(list.get(2));
         System.out.println(list.get(3));
+        System.out.println(list.get(4));
+        System.out.println(list.get(5));
+        System.out.println(list.get(6));
+        System.out.println(list.size());
 
     }
 }

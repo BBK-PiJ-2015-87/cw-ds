@@ -8,7 +8,7 @@ import interfaces.List;
 public class ListNode {
 
     private Object value;
-    private ListNode next;
+    private ListNode next = null;
 
     public ListNode(Object value) {
         this.value = value;
