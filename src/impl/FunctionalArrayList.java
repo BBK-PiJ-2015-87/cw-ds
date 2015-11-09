@@ -4,46 +4,35 @@ import interfaces.FunctionalList;
 import interfaces.ReturnObject;
 
 /**
- * Created by vladimirsivanovs on 05/11/2015.
+ * Created by Vladimirs Ivanovs on 05/11/2015.
  */
 public class FunctionalArrayList extends ArrayList implements FunctionalList {
+
+    public FunctionalArrayList(int capacity) {
+        super(capacity);
+    }
+
+    public FunctionalArrayList() {
+        super();
+    }
+
     @Override
     public ReturnObject head() {
-        return null;
+        if (this.size() == 0) {
+            return returnEmptyStructureError();
+        }
+        return returnSuccess(elements[0]);
     }
 
     @Override
     public FunctionalList rest() {
-        return null;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return false;
-    }
-
-    @Override
-    public int size() {
-        return 0;
-    }
-
-    @Override
-    public ReturnObject get(int index) {
-        return null;
-    }
-
-    @Override
-    public ReturnObject remove(int index) {
-        return null;
-    }
-
-    @Override
-    public ReturnObject add(int index, Object item) {
-        return null;
-    }
-
-    @Override
-    public ReturnObject add(Object item) {
-        return null;
+        FunctionalList listNoHead = new FunctionalArrayList(this.elements.length);
+        if (this.size == 0) {
+            return listNoHead;
+        }
+        for (int i = 1; i <= this.size - 1; i++) {
+            listNoHead.add(this.elements[i]);
+        }
+        return listNoHead;
     }
 }

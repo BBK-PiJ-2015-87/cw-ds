@@ -12,9 +12,9 @@ public class ArrayList implements List {
     /**
      * The array where all elements are stored. Default size of this array is 5.
      */
-    private Object[] elements;
+    protected Object[] elements;
 
-    private int size = 0;
+    protected int size = 0;
 
     private static final int DEFAULT_CAPACITY = 5;
 
@@ -153,7 +153,7 @@ public class ArrayList implements List {
      *
      * @return
      */
-    private ReturnObject returnOutOfBoundsError() {
+    protected ReturnObject returnOutOfBoundsError() {
         return new ReturnObjectImpl(ErrorMessage.INDEX_OUT_OF_BOUNDS, null);
     }
 
@@ -162,7 +162,7 @@ public class ArrayList implements List {
      *
      * @return
      */
-    private ReturnObject returnEmptyStructureError() {
+    protected ReturnObject returnEmptyStructureError() {
         return new ReturnObjectImpl(ErrorMessage.EMPTY_STRUCTURE, null);
     }
 
@@ -171,7 +171,7 @@ public class ArrayList implements List {
      *
      * @return
      */
-    private ReturnObject returnInvalidArgumentError() {
+    protected ReturnObject returnInvalidArgumentError() {
         return new ReturnObjectImpl(ErrorMessage.INVALID_ARGUMENT, null);
     }
 
@@ -181,7 +181,7 @@ public class ArrayList implements List {
      * @param object to be returned within wrapper object
      * @return
      */
-    private ReturnObject returnSuccess(Object object) {
+    protected ReturnObject returnSuccess(Object object) {
         return new ReturnObjectImpl(ErrorMessage.NO_ERROR, object);
     }
 
