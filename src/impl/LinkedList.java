@@ -9,7 +9,7 @@ import interfaces.ReturnObject;
  */
 public class LinkedList implements List {
 
-    protected int size = 0;
+    protected int size = 0; //size of the list
     public Node head = null;
     public Node tail = null;
 
@@ -62,31 +62,28 @@ public class LinkedList implements List {
         if (isEmpty()) return returnEmptyStructureError();
 
         Node node = getNode(index);
-        Object item = node.getValue();
+        Object item = node.getValue(); //get value of the node
         Node next = node.getNext();
         Node prev = node.getPrev();
 
+        //checks if node is the first element of the list
         if (prev == null) {
             head = next;
-            next.setPrev(null);
         } else {
             prev.setNext(next);
-            next.setPrev(prev);
+            node.setPrev(null);
         }
-
+        //checks if node is the last element of the list
         if (next == null) {
             tail = prev;
-            prev.setNext(null);
         } else {
-            prev.setNext(next);
             next.setPrev(prev);
+            node.setNext(null);
         }
 
-        node.setValue(null);
+        node.setValue(null); //set value of the node to null
         size--;
-
         return returnSuccess(item);
-
     }
 
     @Override
@@ -163,11 +160,23 @@ public class LinkedList implements List {
         size++;
     }
 
-    public boolean isIndexValid(int index) {
+    /**
+     * Checks if element with current index exists within a list.
+     *
+     * @param index to check
+     * @return true if succeeded, false otherwise
+     */
+    private boolean isIndexValid(int index) {
         return (index >= 0 && index < size);
     }
 
-    public boolean isPositionValid(int index) {
+    /**
+     * Checks if position for insertion is valid.
+     *
+     * @param index to check
+     * @return true if succeeded, false otherwise
+     */
+    private boolean isPositionValid(int index) {
         return (index >= 0 && index <= size);
     }
 
@@ -208,6 +217,7 @@ public class LinkedList implements List {
         return new ReturnObjectImpl(ErrorMessage.INDEX_OUT_OF_BOUNDS, null);
     }
 
+    //For testing purposes
     public void printForward() {
         Node node = head;
 
@@ -217,6 +227,7 @@ public class LinkedList implements List {
         }
     }
 
+    //For testing purposes
     public void printBackwards() {
         Node node = tail;
 
@@ -225,5 +236,4 @@ public class LinkedList implements List {
             node = node.getPrev();
         }
     }
-
 }
