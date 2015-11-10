@@ -1,6 +1,7 @@
 package impl;
 
 import interfaces.AbstractStack;
+import interfaces.ErrorMessage;
 import interfaces.List;
 import interfaces.ReturnObject;
 
@@ -25,26 +26,26 @@ public class StackImpl extends AbstractStack {
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return internalList.isEmpty();
     }
 
     @Override
     public int size() {
-        return 0;
+        return internalList.size();
     }
 
     @Override
     public void push(Object item) {
-
+        internalList.add(0, item);
     }
 
     @Override
     public ReturnObject top() {
-        return null;
+        return internalList.get(0);
     }
 
     @Override
     public ReturnObject pop() {
-        return null;
+        return internalList.remove(0);
     }
 }
