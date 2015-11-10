@@ -46,6 +46,8 @@ public class ArrayList implements List {
 
     @Override
     public ReturnObject get(int index) {
+        if(isEmpty()) return returnEmptyStructureError();
+
         if (!isIndexValid(index, size)) {
             return returnOutOfBoundsError();
         } else {
@@ -55,6 +57,7 @@ public class ArrayList implements List {
 
     @Override
     public ReturnObject remove(int index) {
+        if(isEmpty()) return returnEmptyStructureError();
         if (!isIndexValid(index, size)) {
             return returnOutOfBoundsError();
         }

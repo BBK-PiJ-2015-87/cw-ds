@@ -49,17 +49,17 @@ public class LinkedList implements List {
 
     @Override
     public ReturnObject get(int index) {
-        if (!isIndexValid(index)) {
-            return new ReturnObjectImpl(ErrorMessage.INDEX_OUT_OF_BOUNDS, null);
-        }
+        if(isEmpty()) return returnEmptyStructureError();
+        if (!isIndexValid(index)) return returnOutOfBoundsError();
+
         Node node = this.getNode(index);
         return returnSuccess(node.getValue());
     }
 
     @Override
     public ReturnObject remove(int index) {
-        if (!isIndexValid(index)) return returnOutOfBoundsError();
         if (isEmpty()) return returnEmptyStructureError();
+        if (!isIndexValid(index)) return returnOutOfBoundsError();
 
         Node node = getNode(index);
         Object item = node.getValue(); //get value of the node
@@ -101,9 +101,8 @@ public class LinkedList implements List {
 
     @Override
     public ReturnObject add(Object item) {
-        if (item == null) {
-            return returnInvalidArgumentError();
-        }
+        if (item == null) return returnInvalidArgumentError();
+
         addLast(item);
         return returnSuccess(item);
     }
