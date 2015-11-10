@@ -10,16 +10,16 @@ public class TestsLinkedList {
     public static void main(String[] args) {
         LinkedList list = new LinkedList();
 
-        System.out.println("ADDED: " + list.add(0, "HEAD"));
+        java.util.LinkedList list2 = new java.util.LinkedList();
+        list2.remove(1);
+
         System.out.println("ADDED: " + list.add("zero"));
         System.out.println("ADDED: " + list.add("one"));
         System.out.println("ADDED: " + list.add("two"));
         System.out.println("ADDED: " + list.add("three"));
         System.out.println("ADDED: " + list.add("four"));
-        System.out.println("ADDED: " + list.add(6, "five"));
-        System.out.println("ADDED: " + list.add(6, "six"));
-        System.out.println("ADDED: " + list.add(10, "ERROR"));
-        System.out.println("ADDED: " + list.add(0, "TAIL"));
+        System.out.println("ADDED: " + list.add("five"));
+        System.out.println("ADDED: " + list.add(7, "six"));
 
         list.printForward();
         System.out.println("------------");

@@ -62,8 +62,17 @@ public class LinkedList implements List {
         if (isEmpty()) return returnEmptyStructureError();
 
         Node node = getNode(index);
-        node.getPrev().setNext(node.getNext());
-        node.setNext(null);
+        Node next = node.getNext();
+        Node prev = node.getPrev();
+        if (prev == null) {
+            head = next;
+            next.setPrev(null);
+        } else {
+            prev.setNext(next);
+            next.setPrev(prev);
+            node.setPrev(null);
+            node.setNext(null);
+        }
         size--;
 
         return returnSuccess(node.getValue());
@@ -75,18 +84,11 @@ public class LinkedList implements List {
         if (!isPositionValid(index)) return returnOutOfBoundsError();
         if (item == null) return returnInvalidArgumentError();
 
-        if (index == 0) {
-            addFirst(item);
-        } else if (index == size) {
+        if (index == size) {
             addLast(item);
         } else {
-            Node succ = getNode(index);
-            Node pred = succ.getPrev();
-            Node newNode = new Node(item, succ, pred);
-            succ.setPrev(newNode);
-            pred.setNext(newNode);
+            addBefore(item, getNode(index));
         }
-        size++;
         return returnSuccess(item);
     }
 
@@ -96,7 +98,6 @@ public class LinkedList implements List {
             return returnInvalidArgumentError();
         }
         addLast(item);
-        size++;
         return returnSuccess(item);
     }
 
@@ -107,12 +108,14 @@ public class LinkedList implements List {
      */
     private void addFirst(Object item) {
         Node first = head;
-        head = new Node(item, head, null);
-        if (size == 0) {
-            tail = head;
+        Node newNode = new Node(item, first, null);
+        head = newNode;
+        if (first == null) {
+            tail = newNode;
         } else {
-            first.setPrev(head);
+            first.setPrev(newNode);
         }
+        size++;
     }
 
     /**
@@ -122,12 +125,32 @@ public class LinkedList implements List {
      */
     private void addLast(Object item) {
         Node last = tail;
-        tail = new Node(item, null, tail);
-        if (size == 0) {
-            head = tail;
+        Node newNode = new Node(item, null, last);
+        tail = newNode;
+        if (last == null) {
+            head = newNode;
         } else {
-            last.setNext(tail);
+            last.setNext(newNode);
         }
+        size++;
+    }
+
+    /**
+     * Adds a new node before specified node.
+     *
+     * @param item value of new node
+     * @param succ node to insert before
+     */
+    private void addBefore(Object item, Node succ) {
+        Node pred = succ.getPrev();
+        Node newNode = new Node(item, succ, pred);
+        succ.setPrev(newNode);
+        if (pred == null) {
+            head = newNode;
+        } else {
+            pred.setNext(newNode);
+        }
+        size++;
     }
 
     public boolean isIndexValid(int index) {
