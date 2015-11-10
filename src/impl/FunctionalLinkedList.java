@@ -7,43 +7,20 @@ import interfaces.ReturnObject;
  * Created by vladimirsivanovs on 05/11/2015.
  */
 public class FunctionalLinkedList extends LinkedList implements FunctionalList {
+
+    public FunctionalLinkedList() {
+        super();
+    }
+
     @Override
     public ReturnObject head() {
-        return null;
+        if (isEmpty()) return returnEmptyStructureError();
+
+        return returnSuccess(head);
     }
 
     @Override
     public FunctionalList rest() {
-        return null;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return false;
-    }
-
-    @Override
-    public int size() {
-        return 0;
-    }
-
-    @Override
-    public ReturnObject get(int index) {
-        return null;
-    }
-
-    @Override
-    public ReturnObject remove(int index) {
-        return null;
-    }
-
-    @Override
-    public ReturnObject add(int index, Object item) {
-        return null;
-    }
-
-    @Override
-    public ReturnObject add(Object item) {
         return null;
     }
 }
