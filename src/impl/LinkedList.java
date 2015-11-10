@@ -62,20 +62,30 @@ public class LinkedList implements List {
         if (isEmpty()) return returnEmptyStructureError();
 
         Node node = getNode(index);
+        Object item = node.getValue();
         Node next = node.getNext();
         Node prev = node.getPrev();
+
         if (prev == null) {
             head = next;
             next.setPrev(null);
         } else {
             prev.setNext(next);
             next.setPrev(prev);
-            node.setPrev(null);
-            node.setNext(null);
         }
+
+        if (next == null) {
+            tail = prev;
+            prev.setNext(null);
+        } else {
+            prev.setNext(next);
+            next.setPrev(prev);
+        }
+
+        node.setValue(null);
         size--;
 
-        return returnSuccess(node.getValue());
+        return returnSuccess(item);
 
     }
 
