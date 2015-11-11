@@ -2,7 +2,9 @@ package impl;
 
 
 /**
- * Created by vladimirsivanovs on 09/11/2015.
+ * Class represents a node of linked list.
+ *
+ * Created by Vladimirs Ivanovs on 09/11/2015.
  */
 public class Node {
 
