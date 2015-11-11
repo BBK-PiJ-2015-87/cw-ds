@@ -2,6 +2,7 @@ package impl;
 
 import interfaces.ImprovedStack;
 import interfaces.List;
+import interfaces.ReturnObject;
 
 /**
  * Created by vladimirsivanovs on 05/11/2015.
@@ -27,8 +28,9 @@ public class ImprovedStackImpl extends StackImpl implements ImprovedStack {
     @Override
     public ImprovedStack reverse() {
         LinkedList newList = new LinkedList();
-        for (int i = internalList.size() - 1; i >= 0; i--) {
-            newList.add(internalList.get(i));
+        for (int i = 0; i < internalList.size(); i++) {
+            ReturnObject obj = internalList.get(i);
+            newList.add(0, obj.getReturnValue());
         }
         ImprovedStack reversed = new ImprovedStackImpl(newList);
         return reversed;
