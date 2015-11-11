@@ -11,7 +11,7 @@ public class StackImpl extends AbstractStack {
     /**
      * Creates a new abstract stack using the provided list as the
      * underlying data structure.
-     * <p/>
+     * <p>
      * Note: This constructor does not check whether the provided list
      * is null. Programmers must do their own checks. If a null list
      * is provided, a NullPointerException will be thrown at runtime

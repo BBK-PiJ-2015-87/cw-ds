@@ -27,7 +27,7 @@ public class ImprovedStackImpl extends StackImpl implements ImprovedStack {
 
     @Override
     public void remove(Object object) {
-        int i = internalList.size()-1;
+        int i = internalList.size() - 1;
         while (i >= 0) {
             ReturnObject target = internalList.get(i);
             Object targetVal = target.getReturnValue();

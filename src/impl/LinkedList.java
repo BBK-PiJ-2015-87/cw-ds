@@ -15,7 +15,7 @@ public class LinkedList implements List {
 
     @Override
     public boolean isEmpty() {
-        return size==0;
+        return size == 0;
     }
 
     @Override
@@ -49,7 +49,7 @@ public class LinkedList implements List {
 
     @Override
     public ReturnObject get(int index) {
-        if(isEmpty()) return returnEmptyStructureError();
+        if (isEmpty()) return returnEmptyStructureError();
         if (!isIndexValid(index)) return returnOutOfBoundsError();
 
         Node node = this.getNode(index);
@@ -220,9 +220,9 @@ public class LinkedList implements List {
     public void printForward() {
         Node node = head;
 
-       for (int i = 0; i < size; i ++) {
-           System.out.println(i + " : " + node.getValue() + " by index: " + this.get(i));
-           node = node.getNext();
+        for (int i = 0; i < size; i++) {
+            System.out.println(i + " : " + node.getValue() + " by index: " + this.get(i));
+            node = node.getNext();
         }
     }
 
@@ -230,7 +230,7 @@ public class LinkedList implements List {
     public void printBackwards() {
         Node node = tail;
 
-        for (int i = size - 1; i >= 0; i --) {
+        for (int i = size - 1; i >= 0; i--) {
             System.out.println(i + " : " + node.getValue() + " by index: " + this.get(i));
             node = node.getPrev();
         }

@@ -10,7 +10,7 @@ public class ReturnObjectImpl implements ReturnObject {
     private ErrorMessage error;
     private Object returnValue;
 
-    public ReturnObjectImpl(ErrorMessage error, Object returnValue){
+    public ReturnObjectImpl(ErrorMessage error, Object returnValue) {
         this.error = error;
         this.returnValue = returnValue;
     }

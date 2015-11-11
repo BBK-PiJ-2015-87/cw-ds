@@ -46,7 +46,7 @@ public class ArrayList implements List {
 
     @Override
     public ReturnObject get(int index) {
-        if(isEmpty()) return returnEmptyStructureError();
+        if (isEmpty()) return returnEmptyStructureError();
 
         if (!isIndexValid(index, size)) {
             return returnOutOfBoundsError();
@@ -57,7 +57,7 @@ public class ArrayList implements List {
 
     @Override
     public ReturnObject remove(int index) {
-        if(isEmpty()) return returnEmptyStructureError();
+        if (isEmpty()) return returnEmptyStructureError();
         if (!isIndexValid(index, size)) {
             return returnOutOfBoundsError();
         }
@@ -102,7 +102,7 @@ public class ArrayList implements List {
      * Adds element to the array, increments size by 1 and return wrapper object.
      *
      * @param index position of insertion
-     * @param item Object to be inserted
+     * @param item  Object to be inserted
      * @return inserted object with no Error
      */
     private ReturnObject addElement(int index, Object item) {
@@ -115,7 +115,7 @@ public class ArrayList implements List {
      * Checks if index is a valid number.
      *
      * @param index to check
-     * @param max maximal possible value of provided index
+     * @param max   maximal possible value of provided index
      * @return true if valid, false otherwise
      */
     public boolean isIndexValid(int index, int max) {

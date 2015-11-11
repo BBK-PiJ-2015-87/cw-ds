@@ -3,7 +3,7 @@ package impl;
 
 /**
  * Class represents a node of linked list.
- *
+ * <p>
  * Created by Vladimirs Ivanovs on 09/11/2015.
  */
 public class Node {
