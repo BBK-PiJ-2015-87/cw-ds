@@ -5,21 +5,10 @@ import interfaces.List;
 import interfaces.ReturnObject;
 
 /**
- * Created by vladimirsivanovs on 05/11/2015.
+ * Created by Vladimirs Ivanovs on 05/11/2015.
  */
 public class ImprovedStackImpl extends StackImpl implements ImprovedStack {
 
-    /**
-     * Creates a new abstract stack using the provided list as the
-     * underlying data structure.
-     * <p>
-     * Note: This constructor does not check whether the provided list
-     * is null. Programmers must do their own checks. If a null list
-     * is provided, a NullPointerException will be thrown at runtime
-     * as soon as any operation is attempted on the underlying list.
-     *
-     * @param list the list to be used
-     */
     public ImprovedStackImpl(List list) {
         super(list);
     }
@@ -28,9 +17,9 @@ public class ImprovedStackImpl extends StackImpl implements ImprovedStack {
     @Override
     public ImprovedStack reverse() {
         LinkedList newList = new LinkedList();
-        for (int i = 0; i < internalList.size(); i++) {
+        for (int i = internalList.size(); i >= 0; i--) {
             ReturnObject obj = internalList.get(i);
-            newList.add(0, obj.getReturnValue());
+            newList.add(obj.getReturnValue());
         }
         ImprovedStack reversed = new ImprovedStackImpl(newList);
         return reversed;
@@ -38,6 +27,15 @@ public class ImprovedStackImpl extends StackImpl implements ImprovedStack {
 
     @Override
     public void remove(Object object) {
-
+        int i = internalList.size()-1;
+        while (i >= 0) {
+            ReturnObject target = internalList.get(i);
+            Object targetVal = target.getReturnValue();
+            if (targetVal.equals(object)) {
+                this.internalList.remove(i);
+//                System.out.println("DEBUG: removed object " + targetVal);
+            }
+            i--;
+        }
     }
 }
