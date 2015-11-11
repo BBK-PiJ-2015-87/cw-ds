@@ -1,45 +1,35 @@
 package impl;
 
-import interfaces.ReturnObject;
 import interfaces.SampleableList;
 
 /**
  * Created by vladimirsivanovs on 05/11/2015.
  */
-public class SampleableListImpl implements SampleableList {
+public class SampleableListImpl extends ArrayList implements SampleableList {
 
     @Override
     public SampleableList sample() {
-        return null;
+        SampleableList sampled = new SampleableListImpl();
+
+        if (this.isEmpty()) return sampled;
+
+        for (int i = 0; i < this.size(); i++) {
+            if (isEven(i)) {
+                sampled.add(this.get(i).getReturnValue());
+            }
+        }
+        return sampled;
     }
 
-    @Override
-    public boolean isEmpty() {
+    /**
+     * Checks if number is even.
+     *
+     * @param num number to check
+     * @return true if number is even, false otherwise
+     */
+    public boolean isEven(int num) {
+        if ((num & 1) == 0) return true;
         return false;
     }
 
-    @Override
-    public int size() {
-        return 0;
-    }
-
-    @Override
-    public ReturnObject get(int index) {
-        return null;
-    }
-
-    @Override
-    public ReturnObject remove(int index) {
-        return null;
-    }
-
-    @Override
-    public ReturnObject add(int index, Object item) {
-        return null;
-    }
-
-    @Override
-    public ReturnObject add(Object item) {
-        return null;
-    }
 }
