@@ -1,7 +1,6 @@
 package impl;
 
 import interfaces.AbstractStack;
-import interfaces.ErrorMessage;
 import interfaces.List;
 import interfaces.ReturnObject;
 
