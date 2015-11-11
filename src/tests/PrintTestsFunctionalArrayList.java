@@ -9,7 +9,7 @@ import interfaces.FunctionalList;
  *
  * Created by Vladimirs Ivanovs.
  */
-public class TestsFunctionalArrayList {
+public class PrintTestsFunctionalArrayList {
     public static void main(String[] args) {
         FunctionalArrayList list = new FunctionalArrayList();
         FunctionalArrayList list1 = (FunctionalArrayList)list.rest();

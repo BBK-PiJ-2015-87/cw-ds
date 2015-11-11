@@ -6,7 +6,7 @@ import impl.Node;
 /**
  * Created by vladimirsivanovs on 09/11/2015.
  */
-public class TestsLinkedList {
+public class PrintTestsLinkedList {
     public static void main(String[] args) {
         LinkedList list = new LinkedList();
 

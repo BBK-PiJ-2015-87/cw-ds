@@ -7,7 +7,7 @@ import impl.ArrayList;
  *
  * Created by Vladimirs Ivanovs.
  */
-public class TestsArrayList {
+public class PrintTestsArrayList {
     public static void main(String[] args) {
         ArrayList list = new ArrayList();
         printArray(list);
