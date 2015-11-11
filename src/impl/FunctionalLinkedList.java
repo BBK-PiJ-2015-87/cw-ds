@@ -16,7 +16,7 @@ public class FunctionalLinkedList extends LinkedList implements FunctionalList {
     public ReturnObject head() {
         if (isEmpty()) return returnEmptyStructureError();
 
-        return returnSuccess(head);
+        return returnSuccess(this.head);
     }
 
     @Override
