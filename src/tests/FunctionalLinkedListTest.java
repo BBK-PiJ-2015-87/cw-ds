@@ -2,6 +2,7 @@ package tests;
 
 import impl.FunctionalLinkedList;
 import interfaces.ErrorMessage;
+import interfaces.FunctionalList;
 import interfaces.ReturnObject;
 import org.junit.Before;
 import org.junit.Test;
@@ -41,7 +42,22 @@ public class FunctionalLinkedListTest {
     }
 
     @Test
-    public void testRest() throws Exception {
+    public void shouldReturnNewEmptyListWhenListIsEmpty() throws Exception {
+        FunctionalList rest = emptyList.rest();
+        assertEquals(0, rest.size());
+    }
 
+    @Test
+    public void shouldReturnNewEmptyListWhenOnlyOneElementInList() throws Exception {
+        emptyList.add("one");
+        FunctionalList rest = emptyList.rest();
+        assertEquals(0, rest.size());
+    }
+
+    @Test
+    public void shouldReturnNewListWithoutFirstElement() throws Exception {
+        FunctionalList rest = list.rest();
+        assertEquals(3, rest.size());
+        assertEquals("two", rest.head().getReturnValue());
     }
 }
