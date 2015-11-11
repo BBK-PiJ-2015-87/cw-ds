@@ -35,8 +35,9 @@ public class FunctionalLinkedListTest {
     @Test
     public void shouldReturnHeadObject() throws Exception {
         ReturnObject result = list.head();
+        Object value = result.getReturnValue();
         assertEquals(ErrorMessage.NO_ERROR, result.getError());
-        assertEquals("one", result.getReturnValue());
+        assertEquals("one", value);
     }
 
     @Test
