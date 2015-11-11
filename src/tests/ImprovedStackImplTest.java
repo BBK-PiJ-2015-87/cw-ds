@@ -1,7 +1,7 @@
 package tests;
 
-import impl.ArrayList;
 import impl.ImprovedStackImpl;
+import impl.LinkedList;
 import interfaces.ErrorMessage;
 import interfaces.ImprovedStack;
 import interfaces.List;
@@ -20,12 +20,12 @@ public class ImprovedStackImplTest {
 
     @Before
     public void init() {
-        List list = new ArrayList();
+        List list = new LinkedList();
         stack = new ImprovedStackImpl(list);
     }
 
     @Test
-    public void testReverse() throws Exception {
+        public void shoudlReturnReversedStack() throws Exception {
         stack.push("one");
         stack.push("two");
         stack.push("three");
@@ -42,7 +42,30 @@ public class ImprovedStackImplTest {
     }
 
     @Test
-    public void testRemove() throws Exception {
+    public void shouldReturnEmptyStack() throws Exception {
+        assertEquals(0, stack.reverse().size());
+    }
 
+    @Test
+    public void shouldRemoveThreeObjects() throws Exception {
+        stack.push("REMOVED");
+        stack.push("one");
+        stack.push("REMOVED");
+        stack.push("two");
+        stack.push("REMOVED");
+        stack.remove("REMOVED");
+        assertEquals(2, stack.size());
+        assertEquals("two", stack.top().getReturnValue());
+    }
+
+    @Test
+    public void shouldNotRemoveAnyObjects() throws Exception {
+        stack.push("one");
+        stack.push("two");
+        stack.push("three");
+        stack.push("removed");
+        stack.remove("REMOVED");
+        assertEquals(4, stack.size());
+        assertEquals("removed", stack.top().getReturnValue());
     }
 }
