@@ -27,7 +27,7 @@ public class SampleableListImpl extends ArrayList implements SampleableList {
      * @param num number to check
      * @return true if number is even, false otherwise
      */
-    public boolean isEven(int num) {
+    private boolean isEven(int num) {
         if ((num & 1) == 0) return true;
         return false;
     }
